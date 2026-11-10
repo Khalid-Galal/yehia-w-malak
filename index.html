@@ -1,0 +1,638 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Wedding Invitation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Caveat:wght@500&family=Inter:wght@400;600;700&family=JetBrains+Mono&family=Amiri:ital,wght@0,400;0,700;1,400&family=Aref+Ruqaa:wght@400;700&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#f8f2e9;--ink:#111;--muted:#7a7a7a;--line:#e3e3e3}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background:#fafafa;-webkit-font-smoothing:antialiased}
+body.locked{overflow:hidden}
+.serif{font-family:Fraunces,Georgia,serif}
+.script{font-family:Caveat,cursive}
+.mono{font-family:"JetBrains Mono",monospace;letter-spacing:.35em;text-transform:uppercase;font-size:11px}
+.wrap{max-width:520px;margin:0 auto;padding:0 20px}
+section{padding:96px 0;text-align:center}
+img{display:block}
+
+/* line-drawing animation */
+.draw{fill:none;stroke:var(--ink);stroke-width:1.4;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1}
+.play .draw,.rv.in .draw{animation:draw 2s ease forwards;animation-delay:var(--d,0s)}
+@keyframes draw{to{stroke-dashoffset:0}}
+
+/* scroll reveal */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .9s ease,transform .9s ease;transition-delay:var(--d,0s)}
+.rv.in{opacity:1;transform:none}
+
+/* paper grain (SVG noise) used on every paper surface + a faint film grain over the page */
+:root{--grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+body::after{content:"";position:fixed;inset:0;background:var(--grain);opacity:.45;pointer-events:none;z-index:300}
+:focus-visible{outline:2px solid #b8893f;outline-offset:4px}
+
+/* 1. envelope */
+#envelope{position:fixed;inset:0;z-index:100;perspective:1400px;transition:opacity .9s ease .9s;
+  background:var(--grain),radial-gradient(120% 80% at 30% 20%,#fbfaf8,#eeebe6)}
+#envelope svg.layer{position:absolute;inset:0;width:100%;height:100%}
+.fold{fill:none;stroke-width:1;vector-effect:non-scaling-stroke}
+.flap{transform-origin:50% 0;transition:transform 1s cubic-bezier(.6,.05,.3,1) .35s;filter:drop-shadow(0 3px 4px rgba(0,0,0,.10))}
+.flap polygon{fill:#f6f4f0}
+.tulips{position:absolute;right:-6px;top:50%;width:min(46vw,210px);transform:translateY(-12%)}
+.tulips .draw{stroke:#1d1d1d;stroke-width:1.5}
+.seal{position:absolute;left:50%;top:52%;width:136px;height:136px;margin:-68px 0 0 -68px;padding:0;border:0;background:none;cursor:pointer;
+  filter:drop-shadow(0 8px 10px rgba(70,45,10,.35)) drop-shadow(0 2px 2px rgba(70,45,10,.3));
+  transition:transform .6s ease,opacity .6s ease;animation:pulse 2.6s ease-in-out infinite}
+.seal svg{width:100%;height:100%}
+@keyframes pulse{50%{transform:scale(1.035)}}
+.tap{position:absolute;bottom:9%;left:0;right:0;text-align:center;font-size:30px;color:#2a2a2a;animation:breathe 2.6s ease-in-out infinite}
+@keyframes breathe{50%{opacity:.45}}
+#envelope.open .seal{transform:scale(1.25) rotate(-8deg);opacity:0;animation:none}
+#envelope.open .flap{transform:rotateX(178deg)}
+#envelope.open .tap,#envelope.open .tulips{opacity:0;transition:opacity .4s}
+#envelope.open{opacity:0;pointer-events:none}
+
+/* 2. intro drawing */
+#intro{position:fixed;inset:0;z-index:90;background:var(--grain),radial-gradient(70% 45% at 20% 75%,#fff7ea,transparent),var(--paper);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;transition:opacity 1s ease}
+#intro svg{width:110px;height:auto}
+#intro p{margin:0;font-style:italic;letter-spacing:.06em;opacity:0;transition:opacity 1s 1s}
+#intro.play p{opacity:1}
+#intro.done{opacity:0;pointer-events:none}
+
+/* 3. hero */
+#hero{min-height:100svh;background:radial-gradient(90% 50% at 50% 0%,#fdfdfd,transparent),radial-gradient(80% 40% at 50% 70%,#e2e2e2,transparent),#efefef;padding:48px 0 32px;overflow:hidden}
+.names{font-weight:600;font-size:clamp(52px,15vw,76px);line-height:.95;margin:10px 0 18px}
+.names.rv{color:#c9c4bc;transition:opacity 1s ease,transform 1s ease,color 1.8s ease .4s}
+.names.rv.in{color:var(--ink)}
+.names .amp{font-family:Caveat,cursive;font-weight:500;font-size:.8em}
+.daterow{display:flex;align-items:center;justify-content:center;gap:16px;color:#555}
+.daterow::before,.daterow::after{content:"";width:40px;height:1px;background:#aaa}
+.btn{display:inline-flex;align-items:center;gap:8px;margin-top:22px;padding:13px 24px;border-radius:999px;border:0;background:var(--ink);color:#fff;font:600 14px Inter,sans-serif;cursor:pointer;text-decoration:none}
+.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,.4);font:11px "JetBrains Mono",monospace;letter-spacing:.3em}
+.pics{position:relative;height:300px;margin-top:40px}
+.pic{position:absolute;border-radius:22px;overflow:hidden;background:#cfcfcf;box-shadow:0 18px 40px rgba(0,0,0,.18);display:grid;place-items:center;color:#888;font-size:13px}
+.pic img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.pic.a{width:40%;height:62%;left:2%;top:22%;rotate:-5deg}
+.pic.b{width:52%;height:88%;right:2%;top:0;rotate:5deg}
+.pics .rv{transform:translateY(80px)}
+.pics .rv.in{transform:none}
+.hint{margin-top:28px;color:#888}
+
+/* 4. save the date */
+#std{background:#fff}
+.std-title{font-weight:700;font-size:clamp(46px,13vw,64px);letter-spacing:.12em;line-height:1;margin:0}
+.std-title .script{font-size:.6em;letter-spacing:0;font-weight:500}
+#std .couple{width:min(320px,84%);margin:34px auto 6px;mix-blend-mode:multiply} /* white bg melts into the card at night */
+.rule{height:1px;background:#222;width:80%;margin:0 auto 22px}
+.caps{font-weight:600;letter-spacing:.3em;font-size:14px}
+
+/* 5. venue */
+#venue{position:relative;color:#111;transition:color 1.2s ease;text-align:left;min-height:100svh;display:flex;align-items:center;
+  isolation:isolate;overflow:hidden;
+  background:radial-gradient(70% 45% at 15% 12%,rgba(255,236,200,.75),transparent 70%),linear-gradient(#b9cde0,#dce4ea 50%,#f4eee3)}
+#venue.photo::before{content:"";position:absolute;inset:0;z-index:-1;filter:grayscale(1) contrast(1.05);
+  background:linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.45) 45%,rgba(0,0,0,.85)),var(--img) center/cover}
+#venue h2{font-size:clamp(40px,11vw,56px);font-weight:400;line-height:1;margin:0 0 30px}
+.field{margin-bottom:18px}
+.field .mono{font-size:9px;color:#999;display:block;margin-bottom:4px}
+.field b{font:400 22px Fraunces,serif}
+
+h2.big{font-size:clamp(34px,9vw,44px);font-weight:600;margin:0 0 30px}
+
+/* 7. gallery */
+#gallery{background:#000;color:#fff;text-align:left}
+#gallery h2{font-size:34px;font-weight:600;margin:0 0 6px}
+#gallery .sub{color:#999;font-size:14px;margin:0 0 28px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid .pic{position:relative;aspect-ratio:1;background:#1c1c1c;color:#555;box-shadow:none;border-radius:16px}
+.grid .pic img{transition:transform .6s ease}
+.grid .pic:hover img{transform:scale(1.06)}
+
+/* 8. countdown */
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:10px 0 30px}
+.card{background:#fff;border:1px solid #eee;border-radius:20px;padding:26px 0 20px;box-shadow:0 10px 30px rgba(0,0,0,.05)}
+.card b{display:block;font:400 48px Fraunces,serif}
+.card .mono{font-size:9px;color:#999}
+.divider{width:60px;height:1px;background:#ccc;margin:36px auto}
+.msg{font:italic 18px/1.9 Fraunces,serif;color:var(--muted)}
+
+/* 9. footer */
+footer{background:#000;color:#fff;text-align:center;padding:70px 20px 50px}
+footer h2{font-weight:400;font-size:clamp(30px,9vw,44px);margin:0 0 8px}
+footer .amp{color:#777;font-style:italic}
+footer .mono{color:#777;font-size:10px}
+
+/* music button */
+#music{position:fixed;right:18px;bottom:18px;z-index:80;width:44px;height:44px;border-radius:50%;border:0;background:#111;display:none;align-items:center;justify-content:center;gap:3px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+#music.on,#music.off{display:flex}
+#music i{width:3px;height:14px;background:#fff;border-radius:2px;transform-origin:bottom}
+#music.on i{animation:eq 1s ease-in-out infinite}
+#music.on i:nth-child(2){animation-delay:.2s}#music.on i:nth-child(3){animation-delay:.4s}#music.on i:nth-child(4){animation-delay:.1s}
+#music.off i{transform:scaleY(.4)}
+@keyframes eq{50%{transform:scaleY(.35)}}
+
+/* ───── night sky: moon, twinkling stars, fireflies (technique from katbktab) ───── */
+#hero{position:relative}
+#hero .wrap,#venue .wrap{position:relative;z-index:1}
+.sky{position:absolute;inset:0;pointer-events:none;z-index:0;transition:opacity 1.2s ease}
+.moon{position:absolute;top:9%;right:11%;width:84px;height:84px;border-radius:50%;
+  background:
+    radial-gradient(circle at 63% 30%,rgba(140,142,162,.2) 0 6%,transparent 12%),
+    radial-gradient(circle at 34% 57%,rgba(140,142,162,.18) 0 9%,transparent 17%),
+    radial-gradient(circle at 60% 70%,rgba(140,142,162,.14) 0 4%,transparent 10%),
+    radial-gradient(circle at 42% 32%,rgba(150,150,168,.2) 0 16%,transparent 28%),
+    radial-gradient(circle at 35% 35%,#fffefa 0%,#ecebe4 38%,#c9c9d3 72%,#9496aa 100%);
+  box-shadow:0 0 40px rgba(235,236,255,.45),0 0 120px rgba(200,206,245,.22),0 0 260px rgba(170,180,235,.12),inset -10px -8px 18px rgba(55,58,90,.38);
+  transition:opacity 1.4s ease,transform 1.8s cubic-bezier(.55,.1,.45,.9)}
+#hero .moon{top:72px;right:18px;width:58px;height:58px}
+.sun{position:absolute;top:9%;left:12%;width:88px;height:88px;border-radius:50%;
+  background:radial-gradient(circle,#fffceb 0%,#ffe9a8 35%,#ffba6a 70%,#ff8a48 100%);
+  box-shadow:0 0 60px rgba(255,200,120,.55),0 0 130px rgba(255,170,90,.32),0 0 220px rgba(255,140,80,.18);
+  transition:opacity 1.4s ease,transform 1.8s cubic-bezier(.55,.1,.45,.9)}
+#hero .sun{top:72px;left:18px;width:58px;height:58px}
+.nightlayer{position:absolute;inset:0;transition:opacity 1.2s ease}
+#hero .nightlayer{background:radial-gradient(90% 45% at 80% 0%,#1d2342,transparent),radial-gradient(80% 40% at 50% 75%,#151a36,transparent),linear-gradient(#070a1c,#0c1030 60%,#0e1233)}
+#venue .nightlayer{background:radial-gradient(120% 40% at 50% 100%,#23263a,transparent),linear-gradient(#0c0f22,#080a18 65%,#040509)}
+#venue.photo .nightlayer{background:none}
+.star{position:absolute;background:#fff;border-radius:50%;box-shadow:0 0 4px rgba(255,255,255,.8);
+  animation:twinkle var(--tdur,3.2s) ease-in-out var(--tdelay,0s) infinite}
+@keyframes twinkle{0%,100%{opacity:.25;transform:scale(.85)}50%{opacity:1;transform:scale(1.35)}}
+.firefly{position:absolute;width:5px;height:5px;border-radius:50%;background:#fff5c2;
+  box-shadow:0 0 6px 2px rgba(255,240,170,.85),0 0 18px 6px rgba(255,214,120,.35);
+  animation:fireflyDrift var(--fdur,12s) ease-in-out var(--fdelay,0s) infinite,fireflyGlow var(--gdur,2.6s) ease-in-out var(--gdelay,0s) infinite}
+@keyframes fireflyDrift{0%,100%{transform:translate(0,0)}20%{transform:translate(var(--fx1),var(--fy1))}40%{transform:translate(var(--fx2),var(--fy2))}60%{transform:translate(var(--fx3),var(--fy3))}80%{transform:translate(var(--fx4),var(--fy4))}}
+@keyframes fireflyGlow{0%,100%{opacity:.15}50%{opacity:1}}
+/* moon rises from below: venue when scrolled into view, hero when night starts */
+/* sunset / moonrise (and back): sun sinks to the lower-left, moon climbs from the lower-right, like katbktab */
+body:not(.night) .nightlayer{opacity:0}
+body.night .sun,#venue .sky:not(.up) .sun{opacity:0;transform:translate(-8vw,45vh)}
+body:not(.night) .moon,#venue .sky:not(.up) .moon{opacity:0;transform:translate(8vw,45vh)}
+body.night #venue,#venue.photo{color:#fff}
+body:not(.night) #venue:not(.photo) .field .mono{color:#6b6b6b}
+body:not(.night) #venue:not(.photo) .btn.ghost{border-color:rgba(0,0,0,.35);color:#111}
+#venue.photo .sun,#venue.photo .moon,#venue.photo .star{display:none}
+
+/* ───── night mood: body.night flips every light section to a moonlit midnight ───── */
+#hero,#std,#countdown{transition:background 1.2s ease,color 1.2s ease}
+body.night{background:#05060d;color:#eceae4}
+body.night .names.rv.in{color:#f4f1ea}
+body.night .daterow{color:#a9adc4}
+body.night .daterow::before,body.night .daterow::after{background:#4a4f6e}
+body.night .btn:not(.ghost){background:#f4f1ea;color:#0b0d1a}
+body.night .hint{color:#7f86a8}
+body.night .pic{box-shadow:0 18px 40px rgba(0,0,0,.55);background:#2a2e48;color:#6d7396}
+/* Save the Date becomes a paper card lit by the moon */
+body.night #std{background:linear-gradient(#0e1233,#0a0d26)}
+body.night #std .wrap{background:radial-gradient(120% 60% at 85% 0%,rgba(255,255,255,.7),transparent 60%),var(--grain),#ecebe6;color:#111;
+  width:calc(100% - 32px);max-width:440px;padding:44px 22px 36px;border-radius:4px;
+  box-shadow:0 30px 60px rgba(0,0,0,.6),0 0 90px rgba(190,200,255,.10)}
+body.night #countdown{background:#0a0d26}
+body.night .msg{color:#9aa0bb}
+body.night .card{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08);box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
+body.night .card .mono{color:#868ca8}
+body.night .divider{background:#2e3352}
+body.night #gallery,body.night footer{background:#05060d}
+body.night #music{background:#f4f1ea}
+body.night #music i{background:#0b0d1a}
+
+/* day/night toggle (44px touch target) */
+.day-night{position:fixed;top:14px;right:14px;z-index:80;width:44px;height:44px;border-radius:50%;border:1px solid rgba(0,0,0,.08);
+  background:rgba(255,255,255,.75);backdrop-filter:blur(8px);cursor:pointer;display:grid;place-items:center;padding:0;
+  box-shadow:0 4px 14px rgba(0,0,0,.12);transition:background .6s ease,border-color .6s ease,transform .25s ease}
+.day-night:active{transform:scale(.92)}
+.day-night svg{grid-area:1/1;width:22px;height:22px;transition:opacity .5s ease,transform .5s ease}
+.day-night .i-sun{color:#c58a1e}
+.day-night .i-moon{color:#e8ecff;opacity:0;transform:rotate(-90deg)}
+body.night .day-night{background:rgba(20,24,52,.7);border-color:rgba(255,255,255,.12)}
+body.night .day-night .i-sun{opacity:0;transform:rotate(90deg)}
+body.night .day-night .i-moon{opacity:1;transform:none}
+body.locked .day-night{display:none}
+
+/* language button sits left of the sun/moon button; visible on the envelope too */
+.lang{right:66px;z-index:110;color:#222}
+.lang svg{transition:transform .5s ease}
+html[lang=ar] .lang svg{transform:scaleX(-1)}
+body.locked .lang{display:grid;right:14px}
+body.night .lang{color:#e8ecff}
+
+/* ───── Arabic (RTL): Arabic fonts, no letter-spacing (it breaks joined letters) ───── */
+html[lang=ar] body{font-family:Cairo,system-ui,sans-serif}
+html[lang=ar] .serif,html[lang=ar] .msg,html[lang=ar] .field b,html[lang=ar] .card b{font-family:Amiri,serif;font-style:normal}
+html[lang=ar] .script,html[lang=ar] .names .amp{font-family:"Aref Ruqaa",serif}
+html[lang=ar] .mono,html[lang=ar] .caps,html[lang=ar] .std-title,html[lang=ar] .btn{font-family:Cairo,sans-serif;letter-spacing:0}
+html[lang=ar] .mono{font-size:13px}
+html[lang=ar] .field .mono{font-size:12px}
+html[lang=ar] .names{line-height:1.3;font-weight:700}
+html[lang=ar] .names .amp{font-size:.7em}
+html[lang=ar] .std-title{font-weight:800;line-height:1.35}
+html[lang=ar] .std-title .script{font-size:.75em;font-weight:700}
+html[lang=ar] #venue,html[lang=ar] #gallery{text-align:right}
+html[lang=ar] #venue h2{line-height:1.35}
+html[lang=ar] .tap{font-size:26px}
+
+/* ───── Blush theme: colours sampled from the reference card (paper, blush petals, dusty rose, mauve) ───── */
+:root{--paper:#f3ece5;--ink:#4e3a39;--muted:#8a706d;--line:#e5d3cf;--blush:#efd1cf;--rose:#cfaba8;--rose-mid:#b48a87;--rose-deep:#8e6764;--mauve:#d5bfbb}
+body{background:var(--paper)}
+:focus-visible{outline-color:var(--rose-deep)}
+#envelope{background:var(--grain),radial-gradient(120% 80% at 30% 20%,#f8f2ec,#e9dfd6)}
+.flap polygon{fill:#f6efe9}
+.flap{filter:drop-shadow(0 3px 4px rgba(110,70,65,.12))}
+.draw{stroke:var(--rose-deep)}
+.tulips .draw{stroke:var(--rose-mid)}
+.tap{color:var(--rose-deep)}
+.seal{filter:drop-shadow(0 8px 10px rgba(110,60,58,.32)) drop-shadow(0 2px 2px rgba(110,60,58,.28))}
+#intro{background:var(--grain),radial-gradient(70% 45% at 20% 75%,#f8e3e0,transparent),var(--paper)}
+#intro p{color:var(--ink)}
+#hero{background:radial-gradient(90% 50% at 50% 0%,#fbf7f3,transparent),radial-gradient(80% 45% at 50% 78%,#f0dbd7,transparent),var(--paper)}
+.names.rv{color:#e6d3cf}
+.names.rv.in{color:var(--ink)}
+.names .amp{color:var(--rose-mid)}
+.daterow{color:var(--muted)}
+.daterow::before,.daterow::after{background:var(--rose)}
+.btn{background:var(--rose-deep)}
+.btn.ghost{background:transparent}
+.pic{background:#ead7d3;color:#a8898a;box-shadow:0 18px 40px rgba(110,70,65,.18)}
+.hint{color:var(--muted)}
+#std{background:#faf5f1}
+#std .couple{mix-blend-mode:normal}
+.rule{background:var(--rose)}
+#std .mono{color:var(--muted)!important}
+#venue{color:var(--ink);background:radial-gradient(70% 45% at 15% 12%,rgba(255,226,212,.8),transparent 70%),linear-gradient(#ecd3cf,#f2e4de 50%,#f6eee7)}
+body:not(.night) #venue:not(.photo) .field .mono{color:var(--muted)}
+body:not(.night) #venue:not(.photo) .btn.ghost{border-color:var(--rose-mid);color:var(--ink)}
+#gallery{background:#4e3a39;color:#f6ece8}
+#gallery .sub{color:#cdb6b2}
+.grid .pic{background:#604948;color:#a88f8d}
+.card{background:#fffaf7;border-color:#efe0dc;box-shadow:0 10px 30px rgba(140,90,85,.08)}
+.card .mono{color:var(--muted)}
+.divider{background:var(--rose)}
+footer{background:#3f2e2e;color:#f6ece8}
+footer .amp,footer .mono{color:#bda3a0}
+#music{background:var(--rose-deep)}
+.day-night{background:rgba(253,248,245,.82);border-color:rgba(142,103,100,.2)}
+.day-night .i-sun{color:#d0877a}
+.day-night .i-moon{color:#f6e6e6}
+.lang{color:var(--rose-deep)}
+.sun{background:radial-gradient(circle,#fff8f2 0%,#ffe1d4 35%,#f6b8a8 70%,#e7958c 100%);
+  box-shadow:0 0 60px rgba(250,190,170,.55),0 0 130px rgba(240,160,150,.3),0 0 220px rgba(230,140,140,.16)}
+
+/* blush night: dusky mauve sky instead of navy */
+body.night{background:#170f12;color:#f4e9e5}
+#hero .nightlayer{background:radial-gradient(90% 45% at 80% 0%,#4a3040,transparent),radial-gradient(80% 40% at 50% 75%,#3a2530,transparent),linear-gradient(#150d12,#22151c 60%,#2a1a22)}
+#venue .nightlayer{background:radial-gradient(120% 40% at 50% 100%,#3b2731,transparent),linear-gradient(#1c1217,#140c10 65%,#0b0608)}
+body.night .names.rv.in{color:#f6e9e6}
+body.night .names .amp{color:var(--blush)}
+body.night .daterow{color:#c8afad}
+body.night .daterow::before,body.night .daterow::after{background:#6a4c52}
+body.night .btn:not(.ghost){background:var(--blush);color:#3b2a2a}
+body.night .hint{color:#a88d8f}
+body.night .pic{background:#3c2a31;color:#8f7479}
+body.night #std{background:linear-gradient(#2a1a22,#1f1419)}
+body.night #std .wrap{background:radial-gradient(120% 60% at 85% 0%,rgba(255,255,255,.65),transparent 60%),var(--grain),#f3e8e2;color:var(--ink);
+  box-shadow:0 30px 60px rgba(0,0,0,.55),0 0 90px rgba(255,200,210,.10)}
+body.night #countdown{background:#1f1419}
+body.night .msg{color:#c4a9a8}
+body.night .card{background:rgba(255,235,235,.05);border-color:rgba(255,220,220,.1);box-shadow:inset 0 1px 0 rgba(255,235,235,.05)}
+body.night .card .mono{color:#a88d8f}
+body.night .divider{background:#5a3f47}
+body.night #gallery,body.night footer{background:#140c10}
+body.night #music{background:var(--blush)}
+body.night #music i{background:#3b2a2a}
+body.night .day-night{background:rgba(40,24,32,.72);border-color:rgba(255,220,225,.14)}
+body.night .lang{color:#f3dcd9}
+
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-iteration-count:1!important;transition-duration:.01s!important}.star{opacity:.7}.firefly{opacity:.5}}
+</style>
+</head>
+<body class="locked">
+
+<script>
+/* ============ EDIT THE WEDDING DETAILS HERE ============ */
+const CONFIG = {
+  groom: "Yehia",
+  bride: "Malak",
+  date: "2026-11-28T20:00:00",
+  venue: "Artillery Officers' House · Horus",
+  mapUrl: "https://maps.app.goo.gl/NURE5B2t2tcvuqmy7",
+  venuePhoto: "",                         // e.g. "photos/venue.jpg" (empty = night sky with moon)
+  heroPhotos: ["photos/1.jpg", "photos/2.jpg"],
+  gallery: ["photos/1.jpg", "photos/2.jpg", "photos/3.jpg", "photos/4.jpg"],
+  song: "music/song.mp3",                 // put any mp3 here; button hides if missing
+  message: "Our next chapter starts with all of you beside us. See you on our special day.",
+  defaultLang: "en",                      // "en" / "ar", or "auto" = guest's phone language
+  ar: {                                   // Arabic version of the details above
+    groom: "يحيى",
+    bride: "ملك",
+    venue: "دار ضباط المدفعية · قاعة حورس",
+    message: "فصل جديد في حكايتنا يبدأ بوجودكم جنبنا. مستنيينكم في يومنا المميز.",
+  },
+};
+</script>
+
+<!-- 1. Envelope -->
+<div id="envelope">
+  <!-- lower folds, pressed into the paper (dark line + light line 1px below) -->
+  <svg class="layer" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <path class="fold" stroke="rgba(0,0,0,.09)" d="M0 100 L44 49 M100 100 L56 49"/>
+    <path class="fold" stroke="rgba(255,255,255,.9)" d="M0 100.6 L44 49.6 M100 100.6 L56 49.6"/>
+  </svg>
+  <!-- top flap: opens on tap -->
+  <svg class="layer flap" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <polygon points="0,0 100,0 50,52"/>
+    <path class="fold" stroke="rgba(0,0,0,.08)" d="M0 0 L50 52 L100 0"/>
+  </svg>
+  <!-- tulips drawn in from the right edge -->
+  <svg class="tulips play" viewBox="0 0 200 260" aria-hidden="true">
+    <path class="draw" pathLength="1" style="--d:.2s" d="M205 20 C160 18 120 30 78 62"/>
+    <path class="draw" pathLength="1" style="--d:.9s" d="M78 62 C70 50 52 46 40 52 C44 58 46 62 44 68 C52 64 58 66 62 72 C58 78 58 86 62 90 C70 84 78 74 78 62 Z"/>
+    <path class="draw" pathLength="1" style="--d:1.2s" d="M62 72 C66 68 72 64 78 62"/>
+    <path class="draw" pathLength="1" style="--d:.5s" d="M205 120 C170 130 140 160 122 200"/>
+    <path class="draw" pathLength="1" style="--d:1.1s" d="M122 200 C108 196 96 204 92 218 C100 218 104 220 106 226 C110 222 116 222 120 226 C118 234 120 242 126 246 C134 236 132 214 122 200 Z"/>
+    <path class="draw" pathLength="1" style="--d:1.4s" d="M150 152 C134 140 116 142 104 150 C120 158 136 160 150 152 Z"/>
+    <path class="draw" pathLength="1" style="--d:1.5s" d="M120 226 C118 216 120 206 122 200"/>
+  </svg>
+  <button class="seal" aria-label="Open the invitation">
+    <svg viewBox="0 0 140 140" aria-hidden="true">
+      <defs>
+        <radialGradient id="wax" cx="36%" cy="30%" r="78%">
+          <stop offset="0" stop-color="#f8dedb"/><stop offset=".35" stop-color="#dcaca8"/>
+          <stop offset=".75" stop-color="#b07c78"/><stop offset="1" stop-color="#7a4b49"/>
+        </radialGradient>
+        <radialGradient id="pool" cx="40%" cy="35%" r="70%">
+          <stop offset="0" stop-color="#e6bab6"/><stop offset=".7" stop-color="#b9827e"/><stop offset="1" stop-color="#84524f"/>
+        </radialGradient>
+        <filter id="wobble" x="-10%" y="-10%" width="120%" height="120%">
+          <feTurbulence type="fractalNoise" baseFrequency=".045" numOctaves="2" seed="7"/>
+          <feDisplacementMap in="SourceGraphic" scale="10"/>
+        </filter>
+        <filter id="speck"><feTurbulence type="fractalNoise" baseFrequency="1.4" numOctaves="2" seed="3"/>
+          <feColorMatrix values="0 0 0 0 1  0 0 0 0 .92  0 0 0 0 .92  0 0 0 .5 -.18"/><feComposite in2="SourceGraphic" operator="in"/></filter>
+      </defs>
+      <!-- melted wax edge -->
+      <circle cx="70" cy="70" r="62" fill="url(#wax)" filter="url(#wobble)"/>
+      <!-- pressed stamp area -->
+      <circle cx="70" cy="70" r="46" fill="url(#pool)"/>
+      <circle cx="70" cy="70" r="46" fill="none" stroke="#6b3d3b" stroke-opacity=".55" stroke-width="2.5"/>
+      <circle cx="70.8" cy="71" r="47.5" fill="none" stroke="#fde8e5" stroke-opacity=".55" stroke-width="1.2"/>
+      <!-- embossed olive branch: dark groove + light edge -->
+      <g fill="none" stroke-linecap="round" stroke-width="2">
+        <g stroke="#fff0ee" stroke-opacity=".6" transform="translate(.8 .8)">
+          <path d="M46 94 Q70 70 96 46"/><path d="M56 84 q-12-2-15-12 q12 1 15 12M64 76 q-12-4-13-15 q12 2 13 15M72 68 q-10-5-10-16 q10 3 10 16M80 60 q-8-6-6-16 q8 5 6 16M62 80 q12 1 17 11 q-12 1-17-11M70 72 q12 0 17 9 q-12 2-17-9M78 64 q11-1 16 7 q-11 3-16-7"/>
+        </g>
+        <g stroke="#5c3331" stroke-opacity=".8">
+          <path d="M46 94 Q70 70 96 46"/><path d="M56 84 q-12-2-15-12 q12 1 15 12M64 76 q-12-4-13-15 q12 2 13 15M72 68 q-10-5-10-16 q10 3 10 16M80 60 q-8-6-6-16 q8 5 6 16M62 80 q12 1 17 11 q-12 1-17-11M70 72 q12 0 17 9 q-12 2-17-9M78 64 q11-1 16 7 q-11 3-16-7"/>
+        </g>
+      </g>
+      <!-- soft highlight + wax texture -->
+      <ellipse cx="50" cy="40" rx="22" ry="12" fill="#fff3f1" opacity=".25" transform="rotate(-30 50 40)"/>
+      <circle cx="70" cy="70" r="62" fill="#fff" filter="url(#speck)" opacity=".5"/>
+    </svg>
+  </button>
+  <div class="tap script" data-t="tap"></div>
+</div>
+
+<!-- 2. Intro drawing -->
+<div id="intro">
+  <svg viewBox="0 0 100 180" id="sprig"></svg>
+  <p class="serif" data-t="invited"></p>
+  <svg viewBox="0 0 100 210">
+    <path class="draw" pathLength="1" d="M50 10 Q53 110 55 200" style="--d:.2s"/>
+    <path class="draw" pathLength="1" d="M51 60 Q32 68 22 94" style="--d:1s"/>
+    <path class="draw" pathLength="1" d="M51 60 Q74 52 90 60" style="--d:1.2s"/>
+  </svg>
+</div>
+
+<!-- 3. Hero -->
+<section id="hero">
+  <div class="wrap">
+    <div class="mono rv" id="mono"></div>
+    <div class="script rv" style="--d:.5s;font-size:28px;margin-top:40px" data-t="married"></div>
+    <h1 class="names serif rv" style="--d:.1s"><span data-k="groom"></span> <span class="amp" data-t="amp"></span><br><span data-k="bride"></span></h1>
+    <div class="daterow mono rv" style="--d:.7s" data-k="dots"></div>
+    <button class="btn rv" style="--d:.9s" id="saveBtn" data-t="saveBtn"></button>
+    <div class="pics">
+      <div class="pic a rv" style="--d:1.1s"><span class="ph" data-n="1"></span><img alt="" data-src="0"></div>
+      <div class="pic b rv" style="--d:1.3s"><span class="ph" data-n="2"></span><img alt="" data-src="1"></div>
+    </div>
+    <div class="mono hint rv" style="--d:1.6s" data-t="scroll"></div>
+  </div>
+</section>
+
+<!-- 4. Save the date -->
+<section id="std">
+  <div class="wrap rv">
+    <h2 class="std-title" data-t="stdTitle"></h2>
+    <img src="couple-rose.png" alt="Bride and groom shyly covering their faces, showing their rings" class="couple">
+    <div class="rule"></div>
+    <div class="caps"><span data-k="GROOM"></span> + <span data-k="BRIDE"></span></div>
+    <div class="mono" style="margin-top:8px;color:#555" data-k="dots"></div>
+  </div>
+</section>
+
+<!-- 5. Venue -->
+<section id="venue">
+  <div class="wrap rv" style="width:100%">
+    <h2 class="serif" data-t="venueTitle"></h2>
+    <div class="field"><span class="mono" data-t="venueL"></span><b data-k="venue"></b></div>
+    <div class="field"><span class="mono" data-t="whenL"></span><b data-k="when"></b></div>
+    <a class="btn ghost" id="mapBtn" target="_blank" rel="noopener" data-t="maps"></a>
+  </div>
+</section>
+
+<!-- 7. Gallery -->
+<section id="gallery">
+  <div class="wrap">
+    <h2 class="serif rv" data-t="moments"></h2>
+    <p class="sub rv" data-t="momentsSub"></p>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<!-- 8. Countdown -->
+<section id="countdown">
+  <div class="wrap">
+    <h2 class="serif big rv" data-t="counting"></h2>
+    <div class="cards rv">
+      <div class="card"><b id="cd-d">0</b><span class="mono" data-t="days"></span></div>
+      <div class="card"><b id="cd-h">0</b><span class="mono" data-t="hours"></span></div>
+      <div class="card"><b id="cd-m">0</b><span class="mono" data-t="minutes"></span></div>
+      <div class="card"><b id="cd-s">0</b><span class="mono" data-t="seconds"></span></div>
+    </div>
+    <div class="script rv" style="font-size:26px" id="cd-note" data-t="until"></div>
+    <div class="divider"></div>
+    <h3 class="serif rv" style="font-weight:400;font-size:22px" data-t="excited"></h3>
+    <p class="msg rv" data-k="message"></p>
+  </div>
+</section>
+
+<!-- 9. Footer -->
+<footer>
+  <h2 class="serif"><span data-k="groom"></span> <span class="amp" data-t="amp"></span> <span data-k="bride"></span></h2>
+  <div class="mono" data-k="dots"></div>
+</footer>
+
+<button class="day-night lang" id="langBtn" type="button">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M2.5 12h19M12 2.5a14 14 0 0 1 3.8 9.5 14 14 0 0 1-3.8 9.5 14 14 0 0 1-3.8-9.5A14 14 0 0 1 12 2.5z"/></svg>
+</button>
+<button class="day-night" id="dayNight" type="button" aria-label="Toggle night mood" aria-pressed="false">
+  <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="currentColor" stroke="none"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>
+  <svg class="i-moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.8a9 9 0 1 1-9.8-9.8 7 7 0 0 0 9.8 9.8z"/></svg>
+</button>
+<button id="music" aria-label="Toggle music"><i></i><i></i><i></i><i></i></button>
+<audio id="song" loop preload="auto"></audio>
+
+<script>
+const C = CONFIG, $ = s => document.querySelector(s), $$ = s => document.querySelectorAll(s);
+const when = new Date(C.date);
+const pad = n => String(n).padStart(2, "0");
+
+// interface text in both languages
+const T = {
+  en: { tap: "Click to open", invited: "You are invited!", married: "we're getting married", amp: "&amp;", saveBtn: "Save the Date →", scroll: "Scroll ↓",
+    stdTitle: 'SAVE<br><span class="script">the</span>DATE!', venueTitle: "Meet us<br><em>under the</em> stars.",
+    venueL: "Venue", whenL: "When", maps: "OPEN IN MAPS ↗",
+    moments: "Moments, Framed.", momentsSub: "Our story so far, one photo at a time.",
+    counting: "Counting the days", days: "Days", hours: "Hours", minutes: "Minutes", seconds: "Seconds",
+    until: "Until forever begins ✿", today: "Today is the day ✿", excited: "We're so excited to see you!",
+    photo: "Photo", wedding: "Wedding", langLabel: "عرض النسخة العربية" },
+  ar: { tap: "اضغط لفتح الدعوة", invited: "يسعدنا دعوتكم!", married: "بكل الحب ندعوكم لحفل زفاف", amp: "و", saveBtn: "احفظ الموعد ←", scroll: "انزل لتحت ↓",
+    stdTitle: 'احفظوا<br>التاريخ', venueTitle: "نلقاكم<br><em>تحت</em> النجوم.",
+    venueL: "المكان", whenL: "الموعد", maps: "افتح الخريطة ↖",
+    moments: "لحظات لا تُنسى.", momentsSub: "حكايتنا لحد دلوقتي، صورة ورا صورة.",
+    counting: "العد التنازلي", days: "يوم", hours: "ساعة", minutes: "دقيقة", seconds: "ثانية",
+    until: "حتى تبدأ حكاية العمر ✿", today: "النهارده اليوم الموعود ✿", excited: "متحمسين جدًا نشوفكم!",
+    photo: "صورة", wedding: "زفاف", langLabel: "Show English version" },
+};
+let lang = "en";
+const D = () => lang === "ar" ? { ...C, ...C.ar } : C;            // details in the current language
+const num = (n, min = 1) => Number(n).toLocaleString(lang === "ar" ? "ar-EG" : "en-US", { minimumIntegerDigits: min, useGrouping: false });
+
+function render(l) {
+  lang = l;
+  const d = D(), t = T[l], h = when.getHours(), m = when.getMinutes();
+  document.documentElement.lang = l;
+  document.documentElement.dir = l === "ar" ? "rtl" : "ltr";
+  const txt = {
+    groom: d.groom, bride: d.bride, GROOM: d.groom.toUpperCase(), BRIDE: d.bride.toUpperCase(),
+    dots: `${num(when.getDate(), 2)} . ${num(when.getMonth() + 1, 2)} . ${num(when.getFullYear())}`,
+    when: l === "ar"
+      ? when.toLocaleDateString("ar-EG", { weekday: "long", day: "numeric", month: "long", year: "numeric" }) + " · " +
+        num(h % 12 || 12) + (m ? ":" + num(m, 2) : "") + (h >= 12 ? " مساءً" : " صباحًا")
+      : when.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) + " · " +
+        when.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" }).replace(":00", "").replace(" ", "").toLowerCase(),
+    venue: d.venue, message: d.message,
+  };
+  $$("[data-k]").forEach(el => el.textContent = txt[el.dataset.k]);
+  $$("[data-t]").forEach(el => el.innerHTML = t[el.dataset.t]);
+  $$(".ph").forEach(el => el.textContent = `${t.photo} ${num(el.dataset.n)}`);
+  $("#mono").textContent = l === "ar" ? `${t.wedding} ${num(when.getFullYear())}` : `${d.groom[0]} & ${d.bride[0]} · ${when.getFullYear()}`;
+  document.title = `${d.groom} & ${d.bride} · ${t.wedding}`;
+  $("#langBtn").setAttribute("aria-label", t.langLabel);
+  if (typeof tick === "function") tick();
+}
+$("#mapBtn").href = C.mapUrl;
+if (C.venuePhoto) { $("#venue").classList.add("photo"); $("#venue").style.setProperty("--img", `url("${C.venuePhoto}")`); }
+
+// night sky: a moon, stars that twinkle on their own phase, and drifting fireflies (pattern from katbktab)
+function makeSky(host, stars, flies) {
+  const n = (a, b) => (a + Math.random() * b).toFixed(1), r = k => ((Math.random() - .5) * k).toFixed(0) + "px";
+  let h = '<div class="nightlayer">';
+  for (let i = 0; i < stars; i++) {
+    const z = Math.random() < .8 ? n(1, 1.3) : n(1.8, 1.4);
+    h += `<i class="star" style="left:${n(0, 100)}%;top:${n(0, 70)}%;width:${z}px;height:${z}px;--tdur:${n(2.2, 3.5)}s;--tdelay:-${n(0, 4)}s"></i>`;
+  }
+  for (let i = 0; i < flies; i++)
+    h += `<i class="firefly" style="left:${n(5, 90)}%;top:${n(55, 40)}%;--fdur:${n(9, 9)}s;--fdelay:-${n(0, 8)}s;--gdur:${n(1.8, 2.4)}s;--gdelay:-${n(0, 3)}s;--fx1:${r(120)};--fy1:${r(90)};--fx2:${r(140)};--fy2:${r(110)};--fx3:${r(130)};--fy3:${r(80)};--fx4:${r(120)};--fy4:${r(70)}"></i>`;
+  h += '</div><div class="sun"></div><div class="moon"></div>';
+  const sky = document.createElement("div");
+  sky.className = "sky"; sky.setAttribute("aria-hidden", "true"); sky.innerHTML = h;
+  host.prepend(sky); return sky;
+}
+makeSky($("#hero"), 60, 6);
+const venueSky = makeSky($("#venue"), 90, 14);
+new IntersectionObserver(([e]) => e.isIntersecting && venueSky.classList.add("up"), { threshold: .3 }).observe($("#venue"));
+
+// every visit starts from the beginning: top of the page (no scroll restore on refresh)
+history.scrollRestoration = "manual";
+scrollTo(0, 0);
+
+// night mood: follows the guest's clock (18:00–06:00); the button flips it for this visit only
+const dn = $("#dayNight");
+const setNight = on => { document.body.classList.toggle("night", on); dn.setAttribute("aria-pressed", on); };
+const hr = new Date().getHours();
+setNight(hr >= 18 || hr < 6);
+dn.onclick = () => setNight(!document.body.classList.contains("night"));
+
+// photos (missing files fall back to the grey placeholder)
+const setImg = (img, src) => { img.onerror = () => img.remove(); img.src = src; };
+$$("#hero img").forEach(img => setImg(img, C.heroPhotos[img.dataset.src]));
+$("#grid").innerHTML = C.gallery.map((_, i) => `<div class="pic rv" style="--d:${i * .12}s"><span class="ph" data-n="${i + 1}"></span><img alt=""></div>`).join("");
+$$("#grid img").forEach((img, i) => setImg(img, C.gallery[i]));
+
+// language: starts in the config default every visit; the globe switches it for this visit only
+render(C.defaultLang !== "auto" ? C.defaultLang : (navigator.language || "").startsWith("ar") ? "ar" : "en");
+$("#langBtn").onclick = () => render(lang === "ar" ? "en" : "ar");
+
+// lavender sprig for the intro
+let sprig = `<path class="draw" pathLength="1" d="M50 175 V22" style="--d:0s"/>
+  <ellipse class="draw" pathLength="1" cx="50" cy="16" rx="3.5" ry="6" style="--d:.4s"/>`;
+for (let i = 0; i < 6; i++) {
+  const y = 34 + i * 18, d = .5 + i * .15;
+  sprig += `<ellipse class="draw" pathLength="1" cx="44" cy="${y}" rx="4.5" ry="8" transform="rotate(-35 44 ${y})" style="--d:${d}s"/>
+            <ellipse class="draw" pathLength="1" cx="56" cy="${y}" rx="4.5" ry="8" transform="rotate(35 56 ${y})" style="--d:${d + .07}s"/>`;
+}
+$("#sprig").innerHTML = sprig;
+
+// countdown
+function tick() {
+  let s = Math.max(0, Math.floor((when - Date.now()) / 1000));
+  $("#cd-d").textContent = num(Math.floor(s / 86400));
+  $("#cd-h").textContent = num(Math.floor(s / 3600) % 24);
+  $("#cd-m").textContent = num(Math.floor(s / 60) % 60);
+  $("#cd-s").textContent = num(s % 60);
+  $("#cd-note").innerHTML = s ? T[lang].until : T[lang].today;
+}
+tick(); setInterval(tick, 1000);
+
+// save the date -> calendar file
+$("#saveBtn").onclick = () => {
+  const f = d => d.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
+  const end = new Date(when.getTime() + 6 * 3600e3);
+  const ics = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//wedding//EN", "BEGIN:VEVENT",
+    `UID:${when.getTime()}@wedding`, `DTSTAMP:${f(new Date())}`, `DTSTART:${f(when)}`, `DTEND:${f(end)}`,
+    `SUMMARY:${T[lang].wedding} ${D().groom} & ${D().bride}`, `LOCATION:${D().venue}`, "END:VEVENT", "END:VCALENDAR"].join("\r\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([ics], { type: "text/calendar" }));
+  a.download = "save-the-date.ics"; a.click();
+};
+
+// music
+const song = $("#song"), mbtn = $("#music");
+song.src = C.song;
+song.onerror = () => mbtn.className = "";
+song.oncanplay = () => { if (!mbtn.className) mbtn.className = song.paused ? "off" : "on"; }; // ponytail: button only appears if the mp3 actually loads
+const play = () => song.play().then(() => mbtn.className = "on").catch(() => {});
+mbtn.onclick = () => song.paused ? play() : (song.pause(), mbtn.className = "off");
+
+// scroll reveal (starts once the intro is gone)
+function startReveal() {
+  document.body.classList.remove("locked");
+  const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && (e.target.classList.add("in"), io.unobserve(e.target))), { threshold: .15 });
+  $$(".rv").forEach(el => io.observe(el));
+}
+
+// envelope -> intro -> site   (add #skip to the URL to jump straight in while editing)
+if (location.hash === "#skip") { $("#envelope").remove(); $("#intro").remove(); startReveal(); }
+else $(".seal").onclick = () => {
+  $("#envelope").classList.add("open");
+  play();
+  const intro = $("#intro");
+  setTimeout(() => intro.classList.add("play"), 1300);
+  setTimeout(() => { intro.classList.add("done"); startReveal(); }, 5200);
+  setTimeout(() => { $("#envelope").remove(); intro.remove(); }, 6300);
+};
+</script>
+</body>
+</html>
