@@ -1,0 +1,10 @@
+{
+  "name": "yehia-w-malak",
+  "compatibility_date": "2026-11-10",
+  "assets": { "directory": "./dist" },
+  "workers_dev": true,
+  "routes": [
+    { "pattern": "yehia-w-malak.com", "custom_domain": true },
+    { "pattern": "www.yehia-w-malak.com", "custom_domain": true }
+  ]
+}
